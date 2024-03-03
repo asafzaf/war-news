@@ -1,9 +1,8 @@
-const catchAsync = require("../utils/catchAsync");
+const catchAsync = require("../utils/catch.async");
+const { warNewsRepository } = require("../repository/War.news.repository");
 
 exports.getAllNews = catchAsync(async (req, res) => {
-  // get from database
-  // const news = await News.find();
-  const news = "All news";
+  const news = await warNewsRepository.getWar_news();
 
   res.status(200).json({
     ...news,
@@ -11,51 +10,60 @@ exports.getAllNews = catchAsync(async (req, res) => {
 });
 
 exports.getNewsById = catchAsync(async (req, res) => {
-  const news = "News by ID";
-
-  // const news = await News.findById(req.params.id);
-  // if (!news) {
-  // return res.status(404).json({
-  //     status: "fail",
-  //     message: "No news found with that ID",
-  // });
-  // }
+  const news = await warNewsRepository.getWar_newsById(req.params.id);
+  if (!news) {
+    return res.status(404).json({
+      status: "fail",
+      message: "No news found with that ID",
+    });
+  }
 
   res.status(200).json({
-    ...news,
+    news,
   });
 });
 
 exports.createNews = catchAsync(async (req, res) => {
-  const news = "Create news";
+  console.log(req);
+  if (!validator(req.body)) {
+    return res.status(400).json({
+      status: "fail",
+      message: "Invalid data sent!",
+    });
+  }
 
-  // const news = await News.create(req.body);
+  const news = await warNewsRepository.createWar_news(req.body);
 
   res.status(201).json({
-    ...news,
+    news,
   });
 });
 
 exports.updateNews = catchAsync(async (req, res) => {
-  const news = "Update news";
-
-  // const news = await News.findByIdAndUpdate(req.params.id
-  //     , req.body, {
-  //     new: true,
-  //     runValidators: true,
-  // });
+  const news = await warNewsRepository.updateWar_news(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
 
   res.status(200).json({
-    ...news,
+    news,
   });
 });
 
 exports.deleteNews = catchAsync(async (req, res) => {
   const news = "Delete news";
 
-  // await News.findByIdAndDelete(req.params.id);
+  await warNewsRepository.deleteWar_news(req.params.id);
 
   res.status(204).json({
     data: null,
+    message: "News deleted",
   });
 });
+
+const validator = (body) => {
+  if (!body.title || !body.description || !body.text || !body.author) {
+    return false;
+  }
+  return true;
+};

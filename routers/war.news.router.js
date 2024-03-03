@@ -11,3 +11,5 @@ router
   .get(newsController.getNewsById)
   .put(newsController.updateNews)
   .delete(newsController.deleteNews);
+
+module.exports = router;
