@@ -3,9 +3,12 @@ const app = express();
 const port = process.env.PORT || 3000;
 const newsRouter = require("../routers/war.news.router");
 const morgan = require("morgan");
+const cors = require("cors");
 
 app.use(morgan("dev"));
 app.use(express.json());
+
+app.use(cors());
 
 app.use("/news", newsRouter);
 
