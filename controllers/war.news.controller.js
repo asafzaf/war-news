@@ -1,5 +1,5 @@
 const catchAsync = require("../utils/catch.async");
-const { warNewsRepository } = require("../repository/War.news.repository");
+const { warNewsRepository } = require("../repository/war.news.repository");
 
 exports.getAllNews = catchAsync(async (req, res) => {
   const news = await warNewsRepository.getWar_news();
@@ -24,7 +24,6 @@ exports.getNewsById = catchAsync(async (req, res) => {
 });
 
 exports.createNews = catchAsync(async (req, res) => {
-  console.log(req);
   if (!validator(req.body)) {
     return res.status(400).json({
       status: "fail",
