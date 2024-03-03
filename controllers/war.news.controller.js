@@ -17,6 +17,10 @@ exports.getAllNews = catchAsync(async (req, res) => {
 });
 
 exports.getNewsById = catchAsync(async (req, res) => {
+  if (!req.params.id) {
+    return next(new BadRequestError("id"));
+  }
+
   const news = await warNewsRepository.getWar_newsById(req.params.id);
   if (!news) {
     return res.status(404).json({
@@ -46,6 +50,10 @@ exports.createNews = catchAsync(async (req, res) => {
 });
 
 exports.updateNews = catchAsync(async (req, res) => {
+  if(!req.params.id) {
+    return next(new BadRequestError("id"));
+  }
+
   const news = await warNewsRepository.updateWar_news(req.params.id, req.body, {
     new: true,
     runValidators: true,
@@ -57,6 +65,9 @@ exports.updateNews = catchAsync(async (req, res) => {
 });
 
 exports.deleteNews = catchAsync(async (req, res) => {
+  if (!req.params.id) {
+    return next(new BadRequestError("id"));
+  }
   const news = "Delete news";
 
   await warNewsRepository.deleteWar_news(req.params.id);
