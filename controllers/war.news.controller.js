@@ -1,11 +1,18 @@
 const catchAsync = require("../utils/catch.async");
 const { warNewsRepository } = require("../repository/War.news.repository");
+const { ServerError, NotFoundError, BadRequestError } = require("../errors/errors");
 
 exports.getAllNews = catchAsync(async (req, res) => {
   const news = await warNewsRepository.getWar_news();
 
+  if (!news) {
+    return next(new BadRequestError("data"));
+  }
+  if (news.length === 0) {
+    return next(new NotFoundError("news"));
+  }
   res.status(200).json({
-    ...news,
+    news,
   });
 });
 
