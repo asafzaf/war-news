@@ -1,4 +1,4 @@
-const War_newsModel = require("../model/war.news.model.js");
+const War_newsModel = require("../model/War.news.model.js");
 exports.warNewsRepository = {
   getWar_news: async () => {
     return await War_newsModel.find({});
