@@ -7,5 +7,5 @@ const War_newsSchema = new mongoose.Schema({
   date: { type: Date, default: Date.now },
   photo: { type: String, default: null },
 });
-const War_newsModel = mongoose.model("War-news", War_newsSchema);
+const War_newsModel = mongoose.model("war-new", War_newsSchema);
 module.exports = War_newsModel;
