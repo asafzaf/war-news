@@ -1,5 +1,5 @@
 const catchAsync = require("../utils/catch.async");
-const { warNewsRepository } = require("../repository/war.news.repository");
+const { warNewsRepository } = require("../repository/War.news.repository");
 
 exports.getAllNews = catchAsync(async (req, res) => {
   const news = await warNewsRepository.getWar_news();
